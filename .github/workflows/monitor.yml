@@ -1,0 +1,21 @@
+name: 美股价格监控
+on:
+  push:
+  schedule:
+    - cron: '*/5 * * * *'
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 下载代码
+        uses: actions/checkout@v4
+      - name: 安装Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: 安装依赖库
+        run: pip install -r requirements.txt
+      - name: 执行监控脚本
+        env:
+          SERVERCHAN_SENDKEY: ${{ secrets.SERVERCHAN_SENDKEY }}
+        run: python main.py
