@@ -1,8 +1,10 @@
 name: 美股价格监控
 on:
-  push:
   schedule:
-    - cron: '*/5 * * * *'
+    # UTC 每2小时执行一次，全天执行，交给python内部判断交易时段
+    - cron: '0 */2 * * *'
+  workflow_dispatch: # 支持网页手动运行测试
+
 jobs:
   run:
     runs-on: ubuntu-latest
